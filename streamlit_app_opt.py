@@ -6,7 +6,7 @@ import requests
 """
 #model_path ="local"
 try:
-    model_path =st.secrets.model_path
+    model_path =st.secrets['model_path']
 except:
     model_path ="local"
 
