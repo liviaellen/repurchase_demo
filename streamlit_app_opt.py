@@ -5,7 +5,10 @@ import requests
 # Repurchase Prediction
 """
 #model_path ="local"
-model_path =st.secrets("model_path")
+try:
+    model_path =st.secrets.model_path
+except:
+    model_path ="local"
 
 @st.cache_resource
 def load_prep():
