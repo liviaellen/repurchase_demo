@@ -19,7 +19,6 @@ if st.button('Predict'):
     scaler= joblib.load('scaler_prep.joblib')
     value_to_predict=scaler.transform([value_to_predict])
     print(value_to_predict)
-
     filename = 'model.joblib'
     model = joblib.load(filename)
     pred=model.predict(value_to_predict)[0]

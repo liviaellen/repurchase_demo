@@ -8,7 +8,7 @@ import requests
 try:
     model_path =st.secrets['model_path']
 except:
-    model_path ="local"
+    model_path ="cloud"
 
 @st.cache_resource
 def load_prep():
@@ -31,15 +31,16 @@ value_to_predict=[nb_past_orders, avg_basket, total_purchase_cost, avg_quantity,
 
 if st.button('Predict'):
     if model_path=="local":
-        scaler= load_prep()
+        scaler = load_prep()
         value_to_predict=scaler.transform([value_to_predict])
         print(value_to_predict)
         model = load_model()
         pred=model.predict(value_to_predict)[0]
     else:
-        url="https://localhost"
-        response=requests.get(url,params=value_to_predict)
-        pred=response.json()[0]
+        url="https://model-api-backend-4zunylksjq-as.a.run.app/preppredict"
+        predict_dict={'nb_past_orders':nb_past_orders, 'avg_basket':avg_basket, 'total_purchase_cost':total_purchase_cost, 'avg_quantity':avg_quantity,'total_quantity':total_quantity, 'avg_nb_unique_products':avg_nb_unique_products, 'total_nb_codes':total_nb_codes}
+        response=requests.get(url,params=predict_dict)
+        pred=response.json()['prediction']
     if pred==1:
         st.write('The customer will repurchase')
     else:
