@@ -8,7 +8,7 @@ import requests
 try:
     model_path =st.secrets['model_path']
 except:
-    model_path ="cloud"
+    model_path ="local"
 
 @st.cache_resource
 def load_prep():
